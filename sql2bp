@@ -1,0 +1,136 @@
+#!/usr/bin/env node
+
+var fs = require('fs');
+var colors = require('colors');
+var Q = require("q");
+var program = require('commander');
+var sqljs = require('sqljs');
+
+program
+  .version('0.0.1')
+  .option('-i, --input [input sql path]', 'Specify input SQL file')
+  .option('-o, --output [output blueprint path]', 'Specify output Blueprint API file')
+  .parse(process.argv);
+
+var app = {
+
+	init: function() {
+		var sqlString = this.getSQLString();
+		var entities = this.getCreateTableEntities(sqlString);
+		this.createAST(entities);
+		this.runMatterCompiler();
+	},
+
+	getSQLString: function() {
+		return fs.readFileSync(program.input).toString().replace(/SET(.*?);/gmi, '');
+	},
+
+	getCreateTableEntities: function(sql) {
+		var entities = [];
+		var sqlParseOptions = new sqljs.ParseOptions();
+		var statements = sqljs.parse(sql, undefined, sqlParseOptions);
+		console.log('[Found] '.green, statements.length + ' CREATE TABLE statements');
+
+		statements.forEach(function(statement){
+			if(statement.statement === 'CREATE' && statement.what === 'TABLE') {
+				entities.push({
+					name: statement.table,
+					fields: statement.definitions.filter(function(d){ return d.name; })
+				});
+			}
+		});
+
+		return entities;
+	},
+
+	//then https://github.com/apiaryio/matter_compiler
+	createAST: function(entities) {
+		var ast = {
+			_version: '2.0',
+			metadata: [
+				{
+					name: 'FORMAT',
+					value: '1A'
+				}
+			],
+			name: 'My API',
+			description: 'Description of *My API*.\n\n',
+			resourceGroups: []
+		};
+
+		var resourceGroups = [];
+
+		entities.forEach(function(entity){
+			var resourceGroup = {
+				name: entity.name,
+				description: '',
+				resources: []
+			};
+
+			//create resource...
+			var resource = {
+				name: (entity.name),
+				description: (entity.name),
+				uriTemplate: '/' +  entity.name,
+				model: {},
+				actions:[]
+			};
+
+			//add model...
+			var model = {};
+			entity.fields.forEach(function(field){
+				model[field.name.trim()] = '';
+
+				console.log('*', field.name.trim(), '*');
+
+			});
+
+			//add list...
+			resource.actions.push({
+				name: ("List all " + entity.name),
+				description: '',
+				method: 'GET',
+				parameters: [],
+				examples:[
+					{
+						name: '',
+						description: '',
+						requests: [],
+						responses: [
+							{
+								name: 200,
+								description: '',
+								headers:[
+									{
+										name: 'Content-Type',
+										value: 'application/json'
+									}
+								],
+								body: (JSON.stringify(model) + '\n\n')
+							}
+						]
+					}
+				]
+			});
+
+			resourceGroup.resources.push(resource);
+			resourceGroups.push(resourceGroup);
+		});
+
+		ast.resourceGroups = resourceGroups;
+
+		var filename = "ast.json";
+		fs.writeFile(filename, JSON.stringify(ast, null, 4));
+	},
+
+	runMatterCompiler: function() {
+		var exec = require("child_process").exec;
+
+		exec(('matter_compiler ast.json > ' + program.output), function (err, stdout, stderr) {
+			console.log(stdout);
+		});
+	}
+};
+
+//kickoff
+app.init();

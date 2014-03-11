@@ -2,6 +2,8 @@ pids
 logs
 results
 
+.DS_Store
+Gemfile.lock
 ast.json
 npm-debug.log
 node_modules
