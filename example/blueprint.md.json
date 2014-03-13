@@ -1,0 +1,319 @@
+{
+    "_version": "2.0",
+    "metadata": [
+        {
+            "name": "FORMAT",
+            "value": "1A"
+        }
+    ],
+    "name": "Example Project API",
+    "description": "Application Programming interface for Example Project\n\n",
+    "resourceGroups": [
+        {
+            "name": "User",
+            "description": "The User resource is responsible for managing all interactions with Users in the system.\n\nA User has the following attributes:\n\n- id (int, required)\n- FirstName (varchar, required)\n- LastName (varchar)\n- Email (varchar)\n- CreatedDate (datetime)\n- UpdatedDate (datetime) \n\nAppend to first resource group description\n\n",
+            "resources": [
+                {
+                    "name": "User",
+                    "description": "",
+                    "uriTemplate": "/Users/{id}",
+                    "model": {
+                        "name": "User",
+                        "description": "JSON representation of User resource",
+                        "headers": [
+                            {
+                                "name": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": "{\n    \"id\": \"\",\n    \"FirstName\": \"\",\n    \"LastName\": \"\",\n    \"Email\": \"\",\n    \"CreatedDate\": \"\",\n    \"UpdatedDate\": \"\"\n}\n\n"
+                    },
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "Unique id of the User",
+                            "type": "Integer",
+                            "required": true
+                        }
+                    ],
+                    "actions": [
+                        {
+                            "name": "Get a User",
+                            "method": "GET",
+                            "examples": [
+                                {
+                                    "requests": [],
+                                    "responses": [
+                                        {
+                                            "name": 200,
+                                            "headers": [
+                                                {
+                                                    "name": "Content-Type",
+                                                    "value": "application/json"
+                                                }
+                                            ],
+                                            "body": "{\n    \"id\": \"\",\n    \"FirstName\": \"\",\n    \"LastName\": \"\",\n    \"Email\": \"\",\n    \"CreatedDate\": \"\",\n    \"UpdatedDate\": \"\"\n}\n\n"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "name": "Update a User",
+                            "method": "PUT",
+                            "examples": [
+                                {
+                                    "requests": [
+                                        {
+                                            "body": "{\n    \"FirstName\": \"\",\n    \"LastName\": \"\",\n    \"Email\": \"\",\n    \"CreatedDate\": \"\",\n    \"UpdatedDate\": \"\"\n}\n\n"
+                                        }
+                                    ],
+                                    "responses": [
+                                        {
+                                            "name": 200,
+                                            "headers": [
+                                                {
+                                                    "name": "Content-Type",
+                                                    "value": "application/json"
+                                                }
+                                            ],
+                                            "body": "{\n    \"id\": \"\",\n    \"FirstName\": \"\",\n    \"LastName\": \"\",\n    \"Email\": \"\",\n    \"CreatedDate\": \"\",\n    \"UpdatedDate\": \"\"\n}\n\n"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "name": "Delete a User",
+                            "method": "DELETE",
+                            "examples": [
+                                {
+                                    "responses": [
+                                        {
+                                            "name": 204
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "Users",
+                    "uriTemplate": "/Users",
+                    "model": {
+                        "name": "User",
+                        "headers": [
+                            {
+                                "name": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": "[\n    {\n        \"id\": \"\",\n        \"FirstName\": \"\",\n        \"LastName\": \"\",\n        \"Email\": \"\",\n        \"CreatedDate\": \"\",\n        \"UpdatedDate\": \"\"\n    },\n    {\n        \"id\": \"\",\n        \"FirstName\": \"\",\n        \"LastName\": \"\",\n        \"Email\": \"\",\n        \"CreatedDate\": \"\",\n        \"UpdatedDate\": \"\"\n    }\n]\n\n"
+                    },
+                    "actions": [
+                        {
+                            "name": "List all Users",
+                            "method": "GET",
+                            "examples": [
+                                {
+                                    "requests": [],
+                                    "responses": [
+                                        {
+                                            "name": 200,
+                                            "headers": [
+                                                {
+                                                    "name": "Content-Type",
+                                                    "value": "application/json"
+                                                }
+                                            ],
+                                            "body": "[\n    {\n        \"id\": \"\",\n        \"FirstName\": \"\",\n        \"LastName\": \"\",\n        \"Email\": \"\",\n        \"CreatedDate\": \"\",\n        \"UpdatedDate\": \"\"\n    },\n    {\n        \"id\": \"\",\n        \"FirstName\": \"\",\n        \"LastName\": \"\",\n        \"Email\": \"\",\n        \"CreatedDate\": \"\",\n        \"UpdatedDate\": \"\"\n    }\n]\n\n"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "name": "Create new a User",
+                            "method": "POST",
+                            "examples": [
+                                {
+                                    "requests": [
+                                        {
+                                            "body": "{\n    \"FirstName\": \"\",\n    \"LastName\": \"\",\n    \"Email\": \"\",\n    \"CreatedDate\": \"\",\n    \"UpdatedDate\": \"\"\n}\n\n"
+                                        }
+                                    ],
+                                    "responses": [
+                                        {
+                                            "name": 201,
+                                            "headers": [
+                                                {
+                                                    "name": "Content-Type",
+                                                    "value": "application/json"
+                                                }
+                                            ],
+                                            "body": "{\n    \"id\": \"\",\n    \"FirstName\": \"\",\n    \"LastName\": \"\",\n    \"Email\": \"\",\n    \"CreatedDate\": \"\",\n    \"UpdatedDate\": \"\"\n}\n\n"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Hat",
+            "description": "Replace second resource group description",
+            "resources": [
+                {
+                    "name": "Hat",
+                    "description": "",
+                    "uriTemplate": "/Hats/{id}",
+                    "model": {
+                        "name": "Hat",
+                        "description": "JSON representation of Hat resource",
+                        "headers": [
+                            {
+                                "name": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": "{\n    \"id\": \"\",\n    \"Style\": \"\",\n    \"Color\": \"\",\n    \"CreatedDate\": \"\",\n    \"UpdatedDate\": \"\"\n}\n\n"
+                    },
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "Unique id of the Hat",
+                            "type": "Integer",
+                            "required": true
+                        }
+                    ],
+                    "actions": [
+                        {
+                            "name": "Get a Hat",
+                            "method": "GET",
+                            "examples": [
+                                {
+                                    "requests": [],
+                                    "responses": [
+                                        {
+                                            "name": 200,
+                                            "headers": [
+                                                {
+                                                    "name": "Content-Type",
+                                                    "value": "application/json"
+                                                }
+                                            ],
+                                            "body": "{\n    \"id\": \"\",\n    \"Style\": \"\",\n    \"Color\": \"\",\n    \"CreatedDate\": \"\",\n    \"UpdatedDate\": \"\"\n}\n\n"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "name": "Update a Hat",
+                            "method": "PUT",
+                            "examples": [
+                                {
+                                    "requests": [
+                                        {
+                                            "body": "{\n    \"Style\": \"\",\n    \"Color\": \"\",\n    \"CreatedDate\": \"\",\n    \"UpdatedDate\": \"\"\n}\n\n"
+                                        }
+                                    ],
+                                    "responses": [
+                                        {
+                                            "name": 200,
+                                            "headers": [
+                                                {
+                                                    "name": "Content-Type",
+                                                    "value": "application/json"
+                                                }
+                                            ],
+                                            "body": "{\n    \"id\": \"\",\n    \"Style\": \"\",\n    \"Color\": \"\",\n    \"CreatedDate\": \"\",\n    \"UpdatedDate\": \"\"\n}\n\n"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "name": "Delete a Hat",
+                            "method": "DELETE",
+                            "examples": [
+                                {
+                                    "responses": [
+                                        {
+                                            "name": 204
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "Hats",
+                    "uriTemplate": "/Hats",
+                    "model": {
+                        "name": "Hat",
+                        "headers": [
+                            {
+                                "name": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": "[\n    {\n        \"id\": \"\",\n        \"Style\": \"\",\n        \"Color\": \"\",\n        \"CreatedDate\": \"\",\n        \"UpdatedDate\": \"\"\n    },\n    {\n        \"id\": \"\",\n        \"Style\": \"\",\n        \"Color\": \"\",\n        \"CreatedDate\": \"\",\n        \"UpdatedDate\": \"\"\n    }\n]\n\n"
+                    },
+                    "actions": [
+                        {
+                            "name": "List all Hats",
+                            "method": "GET",
+                            "examples": [
+                                {
+                                    "requests": [],
+                                    "responses": [
+                                        {
+                                            "name": 200,
+                                            "headers": [
+                                                {
+                                                    "name": "Content-Type",
+                                                    "value": "application/json"
+                                                }
+                                            ],
+                                            "body": "[\n    {\n        \"id\": \"\",\n        \"Style\": \"\",\n        \"Color\": \"\",\n        \"CreatedDate\": \"\",\n        \"UpdatedDate\": \"\"\n    },\n    {\n        \"id\": \"\",\n        \"Style\": \"\",\n        \"Color\": \"\",\n        \"CreatedDate\": \"\",\n        \"UpdatedDate\": \"\"\n    }\n]\n\n"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "name": "Create new a Hat",
+                            "method": "POST",
+                            "examples": [
+                                {
+                                    "requests": [
+                                        {
+                                            "body": "{\n    \"Style\": \"\",\n    \"Color\": \"\",\n    \"CreatedDate\": \"\",\n    \"UpdatedDate\": \"\"\n}\n\n"
+                                        }
+                                    ],
+                                    "responses": [
+                                        {
+                                            "name": 201,
+                                            "headers": [
+                                                {
+                                                    "name": "Content-Type",
+                                                    "value": "application/json"
+                                                }
+                                            ],
+                                            "body": "{\n    \"id\": \"\",\n    \"Style\": \"\",\n    \"Color\": \"\",\n    \"CreatedDate\": \"\",\n    \"UpdatedDate\": \"\"\n}\n\n"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

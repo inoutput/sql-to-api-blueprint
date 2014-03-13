@@ -1,0 +1,12 @@
+{
+	"name": "Example Project API",
+	"description": "Application Programming interface for Example Project\n\n",
+	"resourceGroups": [
+		{
+			"description": "{{original}} \n\nAppend to first resource group description\n\n"
+		},
+		{
+			"description": "Replace second resource group description"
+		}
+	]
+}

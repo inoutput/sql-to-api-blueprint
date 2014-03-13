@@ -18,12 +18,25 @@ var Entity = function(name, fields) {
 		this.setupSampleData();
 	};
 
+	this.getResourceGroup = function() {
+		this.resource_group = {
+			name: this.singular_name,
+			description: this.getDescription(),
+			resources: [
+				this.getSingularResource(),
+				this.getCollectionResource()
+			]
+		};
+
+		return this.resource_group;
+	};
+
 	this.getDescription = function() {
-		var resource_description = ('A ' + this.singular_name + ' has the following attributes:');
-		var description_names = _.pluck(this.fields, 'name');
-		description_names = description_names.map(function(m){ return ('- ' + m); });
-		resource_description += ('\n\n' + description_names.join('\n'));
-		return resource_description;
+		return [
+			'The ' + this.singular_name + ' resource is responsible for managing all interactions with ' + this.name + ' in the system.\n\n',
+			('A ' + this.singular_name + ' has the following attributes:\n\n'),
+			this.fields.map(function(m){ return ('- ' + m.name + ' (' + m.type.toLowerCase() + (m.notNull ? ', required' : '') + ')'); }).join('\n')
+		].join('');
 	};
 
 	this.setupSampleData = function() {
@@ -45,7 +58,7 @@ var Entity = function(name, fields) {
 	this.getSingularResource = function() {
 		this.singular_resource = {
 			name: this.singular_name,
-			description: this.getDescription(),
+			description: '',
 			uriTemplate: ('/' +   this.name + '/{id}'),
 			model: {
 				name: this.singular_name,
@@ -183,16 +196,6 @@ var Entity = function(name, fields) {
 				}
 			]
 		});
-	};
-
-	this.getResourceGroup = function() {
-		this.resource_group = {
-			name: (this.singular_name + ' related resources'),
-			description: '',
-			resources: [this.getSingularResource(), this.getCollectionResource()]
-		};
-
-		return this.resource_group;
 	};
 
 	this.init();

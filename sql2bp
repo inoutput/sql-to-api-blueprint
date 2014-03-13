@@ -14,6 +14,7 @@ var Entity = require('./classes/entity.js');
 program
   .version('0.0.1')
   .option('-i, --input [input sql path]', 'Specify input SQL file')
+  .option('-m, --mixin [JSON AST mixin path]', 'JSON file to mixin to AST')
   .option('-o, --output [output blueprint path]', 'Specify output Blueprint API file')
   .parse(process.argv);
 
@@ -29,15 +30,16 @@ var app = {
 	getSQLString: function() {
 		var sql = fs.readFileSync(program.input).toString();
 
-		//remove set params
+		//set params are feaking out sqljs? - remove
 		sql = sql.replace(/SET(.*?);/gmi, '');
 
-		//DATETIMEs are freaking out sqljs?
-		sql = sql.replace(new RegExp("DATETIME", "g"), 'INT');
-		//DATEs are freaking out sqljs?
-		sql = sql.replace(new RegExp("DATE", "g"), 'INT');
-		//BITs are freaking out sqljs?
-		sql = sql.replace(new RegExp("BIT", "g"), 'SMALLINT');
+		//BITs are freaking out sqljs? - remove
+		sql = sql.replace(new RegExp("BIT", "g"), 'TINYINT');
+
+		//NOTE - this was freaking some SQL out
+		//remove dates and datetimes...
+		//sql = sql.replace(new RegExp("DATETIME", "g"), 'INT');
+		//sql = sql.replace(new RegExp("DATE", "g"), 'INT');
 
 		return sql;
 	},
@@ -92,8 +94,25 @@ var app = {
 			groups.push(entity.getResourceGroup());
 		});
 
-
 		ast.resourceGroups = groups;
+
+
+		//if we have a mixin
+		if(program.mixin) {
+			var mixin_str = fs.readFileSync(program.mixin).toString();
+			if(mixin_str) {
+				var mixin = JSON.parse(mixin_str);
+				ast = _.merge(ast, mixin,  function(a, b) {
+					if(typeof a === "string" && typeof b === "string" && b.indexOf('{{original}}') > -1) {
+						b = b.replace('{{original}}', a);
+						return b;
+					}
+
+					return undefined;
+				});
+			}
+		}
+
 		fs.writeFile((program.output + '.json'), JSON.stringify(ast, null, 4));
 	},
 
